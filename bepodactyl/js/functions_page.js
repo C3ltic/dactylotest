@@ -401,10 +401,10 @@ function kb_keyboardio()
 	return kb;
 }
 
-var tmbw_1 = "$\"«»()@+-/*=%bépoè.vdljz^auiec,tsrnmçêàyxwk'qghf";
+var tmbw_1 = "$\"«»()'+-/*=%bépoè.vdljz^auiec,tsrnmçêàyxwk’qghf";
 var tmbw_2 = "#1234567890°`BÉPOÈ:VDLJZ!AUIEC;TSRNMÇÊÀYXWK?QGHF";
-var tmbw_3 = "–—<>[]       | &œ …      æù¨€©̉       \\{}^~˘    ";
-var tmbw_4 = " „“”≤≥        ˝ Œ ·      ÆÙ            ‘’       ";
+var tmbw_3 = "–—<>[]@      |'&œ`…  /   æù¨€©̉   ~¯   \\{}^˘° ˛ ";
+var tmbw_4 = " „“”≤≥        ˝ Œ ·     ¡ÆÙ˙¤          ‘’       ";
 
 function kb_typematrix_bepow()
 {

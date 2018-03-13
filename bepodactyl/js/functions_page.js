@@ -166,6 +166,8 @@ function type_clavier(a)
         if (a == "kb_typematrix")
           document.getElementById("aff_kb").innerHTML=kb_typematrix();
 
+        if (a == "kb_keyboardio")
+          document.getElementById("aff_kb").innerHTML=kb_keyboardio();
 
 	//document.getElementById("aff_kb").innerHTML=kb_typematrix();
 	//document.getElementById("aff_kb").innerHTML=kb_decal();
@@ -201,13 +203,33 @@ function get_key(e,action)
 	}
 	
 	if (shift_down == true && altgr_down == true)
-		layout = bepo_4;
+		if (type_kb!="kb_keyboardio") 
+		{
+			layout = bepo_4;
+		} else {
+			layout = kbio_4;
+		}
 	if (shift_down == true && altgr_down == false)
-		layout = bepo_2;
+		if (type_kb!="kb_keyboardio") 
+		{
+			layout = bepo_2;
+		} else {
+			layout = kbio_2;
+		}
 	if (shift_down == false && altgr_down == true)
-		layout = bepo_3;
+		if (type_kb!="kb_keyboardio") 
+		{
+			layout = bepo_3;
+		} else {
+			layout = kbio_3;
+		}
 	if (shift_down == false && altgr_down == false)
-		layout = bepo_1;
+		if (type_kb!="kb_keyboardio") 
+		{
+			layout = bepo_1;
+		} else {
+			layout = kbio_1;
+		}
 
 	for (var k = 0 ; k < layout.length ; k++)
 	{
@@ -350,4 +372,51 @@ function kb_typematrix()
 	return kb;
 }
 
-		
+var kbio_1 = "\"«»()$%@+-/*=bépoè^vdljzwauie,ctsrnmêàyx.k'qghfç";
+var kbio_2 = "12345#`67890°BÉPOÈ!VDLJZWAUIE;CTSRNMÊÀYX:K?QGHFÇ";
+var kbio_3 = "—<>[]–       | &œ ¡      æù¨€’        \\{}… ¿    ";
+var kbio_4 = "„“”≤≥         ˝ Œ        ÆÙ            ‘’·      ";
+
+function kb_keyboardio()
+{
+	var row_dec = new Array(26,26,0,0);
+	var key_per_row = new Array(13,11,12,12);
+	var key_space = new Array(6,5,6,6);
+	var key_mid_space = new Array(20,72,72,72);
+	k=0;
+	var row=0;
+
+	var kb= '<div class="kb">';
+
+	for (var i = 0 ; i < 4 ; i++)
+	{
+		for(var j = 0 ; j < key_per_row[i] ; j++)
+		{
+ 
+
+			if(k == 48)
+			  k=36;
+			  
+                        if(j == 0)
+				kb += '<div style="margin-left:'+row_dec[i]+'px" class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
+			else if(j == key_space[i])
+				kb += '<div style="margin-left:'+key_mid_space[i]+'px" class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
+			else
+				kb += '<div class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
+			k++;
+// 			if(k == 36)
+//			  k=38;
+       
+
+			
+
+			  
+		}
+		kb += '<div style="clear:both"></div>';
+                //k=48; // pour avoir le nombre total de touche
+	}
+	kb += '</div>';
+	
+	return kb;
+}
+	

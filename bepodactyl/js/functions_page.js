@@ -6,6 +6,7 @@ demande d'un nouveau texte…
 //cette fonction permet d'avoir un nouveau texte
 var exo_en_cours = 0;													// la leçon en cours												// le numéro de la leçon
 var cur_checked = "checked";
+var key_layout = 0;
 
 var le_texte=new Array();
 
@@ -160,23 +161,27 @@ function type_clavier(a)
 		return;
 	}
 
-        if (a == "kb_decal")
+        if (a == "kb_decal") {
           document.getElementById("aff_kb").innerHTML=kb_decal();
+		  key_layout = 0;
+		}
 
-        if (a == "kb_typematrix")
+        if (a == "kb_typematrix") {
           document.getElementById("aff_kb").innerHTML=kb_typematrix();
+		  key_layout = 0;
+		}
 
-        if (a == "kb_keyboardio")
+        if (a == "kb_keyboardio") {
           document.getElementById("aff_kb").innerHTML=kb_keyboardio();
+		  key_layout = 1;
+		}
 
-	//document.getElementById("aff_kb").innerHTML=kb_typematrix();
-	//document.getElementById("aff_kb").innerHTML=kb_decal();
-	//document.getElementById("aff_kb").innerHTML='<img src="bepo-standard.png" alt="clavier bépo" />';
+        if (a == "kb_tm_bepo_w") {
+          document.getElementById("aff_kb").innerHTML=kb_typematrix_bepow();
+		  key_layout = 2;
+		}
 
-        
 	color_key();
-
-
 }
 
 
@@ -203,32 +208,28 @@ function get_key(e,action)
 	}
 	
 	if (shift_down == true && altgr_down == true)
-		if (type_kb!="kb_keyboardio") 
-		{
-			layout = bepo_4;
-		} else {
-			layout = kbio_4;
+		switch(key_layout) {
+			case 0 : layout = bepo_4; break;
+			case 1 : layout = kbio_4; break;
+			case 2 : layout = tmbw_4; break;
 		}
 	if (shift_down == true && altgr_down == false)
-		if (type_kb!="kb_keyboardio") 
-		{
-			layout = bepo_2;
-		} else {
-			layout = kbio_2;
+		switch(key_layout) {
+			case 0 : layout = bepo_2; break;
+			case 1 : layout = kbio_2; break;
+			case 2 : layout = tmbw_2; break;
 		}
 	if (shift_down == false && altgr_down == true)
-		if (type_kb!="kb_keyboardio") 
-		{
-			layout = bepo_3;
-		} else {
-			layout = kbio_3;
+		switch(key_layout) {
+			case 0 : layout = bepo_3; break;
+			case 1 : layout = kbio_3; break;
+			case 2 : layout = tmbw_3; break;
 		}
 	if (shift_down == false && altgr_down == false)
-		if (type_kb!="kb_keyboardio") 
-		{
-			layout = bepo_1;
-		} else {
-			layout = kbio_1;
+		switch(key_layout) {
+			case 0 : layout = bepo_1; break;
+			case 1 : layout = kbio_1; break;
+			case 2 : layout = tmbw_1; break;
 		}
 
 	for (var k = 0 ; k < layout.length ; k++)
@@ -344,28 +345,19 @@ function kb_typematrix()
 	{
 		for(var j = 0 ; j < key_per_row[i] ; j++)
 		{
- 
-
 			if(k == 48)
 			  k=36;
-			  
-                        if(j == 0)
-				kb += '<div style="margin-left:'+row_dec[i]+'px" class="key" id="k'+k+'">'+bepo_1.charAt(k)+'</div>';
+            if(j == 0)
+			  kb += '<div style="margin-left:'+row_dec[i]+'px" class="key" id="k'+k+'">'+bepo_1.charAt(k)+'</div>';
 			else if(j == key_space[i])
-				kb += '<div style="margin-left:20px" class="key" id="k'+k+'">'+bepo_1.charAt(k)+'</div>';
+			  kb += '<div style="margin-left:20px" class="key" id="k'+k+'">'+bepo_1.charAt(k)+'</div>';
 			else
-				kb += '<div class="key" id="k'+k+'">'+bepo_1.charAt(k)+'</div>';
+			  kb += '<div class="key" id="k'+k+'">'+bepo_1.charAt(k)+'</div>';
 			k++;
  			if(k == 36)
 			  k=38;
-       
-
-			
-
-			  
 		}
 		kb += '<div style="clear:both"></div>';
-                //k=48; // pour avoir le nombre total de touche
 	}
 	kb += '</div>';
 	
@@ -392,31 +384,58 @@ function kb_keyboardio()
 	{
 		for(var j = 0 ; j < key_per_row[i] ; j++)
 		{
- 
-
 			if(k == 48)
 			  k=36;
-			  
-                        if(j == 0)
-				kb += '<div style="margin-left:'+row_dec[i]+'px" class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
+            if(j == 0)
+			  kb += '<div style="margin-left:'+row_dec[i]+'px" class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
 			else if(j == key_space[i])
-				kb += '<div style="margin-left:'+key_mid_space[i]+'px" class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
+			  kb += '<div style="margin-left:'+key_mid_space[i]+'px" class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
 			else
-				kb += '<div class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
+			  kb += '<div class="key" id="k'+k+'">'+kbio_1.charAt(k)+'</div>';
 			k++;
-// 			if(k == 36)
-//			  k=38;
-       
-
-			
-
-			  
 		}
 		kb += '<div style="clear:both"></div>';
-                //k=48; // pour avoir le nombre total de touche
 	}
 	kb += '</div>';
 	
 	return kb;
 }
+
+var tmbw_1 = "$\"«»()@+-/*=%bépoè.vdljz^auiec,tsrnmçêàyxwk'qghf";
+var tmbw_2 = "#1234567890°`BÉPOÈ:VDLJZ!AUIEC;TSRNMÇÊÀYXWK?QGHF";
+var tmbw_3 = "–—<>[]       | &œ …      æù¨€©̉       \\{}^~˘    ";
+var tmbw_4 = " „“”≤≥        ˝ Œ ·      ÆÙ            ‘’       ";
+
+function kb_typematrix_bepow()
+{
+	var row_dec = new Array(0,26,26,26);
+	var key_per_row = new Array(13,12,11,11);
+	var key_space = new Array(6,5,5,5);
+	k=0;
+	var row=0;
+
+	var kb= '<div class="kb">';
+
+	for (var i = 0 ; i < 4 ; i++)
+	{
+		for(var j = 0 ; j < key_per_row[i] ; j++)
+		{
+			if(k == 48)
+			  k=36;
+			  
+            if(j == 0)
+				kb += '<div style="margin-left:'+row_dec[i]+'px" class="key" id="k'+k+'">'+tmbw_1.charAt(k)+'</div>';
+			else if(j == key_space[i])
+				kb += '<div style="margin-left:20px" class="key" id="k'+k+'">'+tmbw_1.charAt(k)+'</div>';
+			else
+				kb += '<div class="key" id="k'+k+'">'+tmbw_1.charAt(k)+'</div>';
+			k++;
+ 			if(k == 36)
+			  k=38;
+		}
+		kb += '<div style="clear:both"></div>';
+	}
+	kb += '</div>';
 	
+	return kb;
+}
